@@ -48,7 +48,7 @@ namespace Win32API {
       inline Input& getInput() { return input; }
 
       void launchWindow(int = SW_NORMAL, bool = true, bool = true);
-      inline bool windowProcess(float);
+      bool windowProcess(float);
 
       void update(float);
       void resize();

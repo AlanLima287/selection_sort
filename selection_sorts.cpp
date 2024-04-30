@@ -109,7 +109,7 @@ public:
       return vector[index];
    }
 
-   inline bool is_sorted() {
+   inline bool is_sorted() const {
       return sorted;
    }
 
@@ -128,7 +128,7 @@ public:
       return true;
    }
 
-   inline ulong get_length() {
+   inline ulong get_length() const {
       return length;
    }
 
@@ -169,21 +169,18 @@ void double_selection_sort(Vector& vector) {
 
 void heapsort(Vector& vector) {
 
-   ulong end = vector.get_length();
-   ulong start = end >> 1;
+   for (ulong end = vector.get_length(), start = end >> 1; end > 1;) {
 
-   while (end > 1) {
-
-      if (start > 0) start--;
-      else {
+      if (start > 0)
+         start--;
+      else { 
          end--;
          swap(vector[end], vector[0]);
       }
 
       ulong root = start;
-      ulong child = (root << 1) + 1;
 
-      while (child < end) {
+      for (ulong child = (root << 1) + 1; child < end; child = (root << 1) + 1) {
 
          if (child + 1 < end && vector[child] < vector[child + 1])
             child++;
@@ -195,8 +192,6 @@ void heapsort(Vector& vector) {
          }
 
          else break;
-
-         child = (root << 1) + 1;
       }
    }
 }

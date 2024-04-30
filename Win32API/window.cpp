@@ -127,7 +127,7 @@ namespace Win32API {
       }
    }
 
-   inline bool Window::windowProcess(float deltaTime) {
+   bool Window::windowProcess(float deltaTime) {
 
       input.setChangedAttribute();
 

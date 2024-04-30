@@ -75,11 +75,9 @@ namespace Win32API {
    } BitmapBuffer;
 
    int str_length_until_newline_end(char* str) {
-
       int i = 0;
       while (*str != '\0' && *str != '\n') { i++; str++; }
       return i;
-
    }
 
    class Window;

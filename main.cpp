@@ -65,33 +65,20 @@ int main(int argc, char** argv) {
 
    Window& window = Window::getInstance();
    window.setInstanceName("Selection Sort");
-   window.getContext().setFont("assets/Consola8.ftmp");
+   window.getContext().setFont("assets/CascadiaMono65.ftmp");
    window.launchWindow(SW_SHOWMAXIMIZED, false, true);
 
-   Win32API::Input& input = window.getInput();
-
-   for (helper.i = 0; helper.i < vector.get_length() - 1; helper.i++) {
-
-      helper.lmin = helper.i;
-
-      for (helper.j = helper.i + 1; helper.j < vector.get_length(); helper.j++) {
-         if (vector[helper.lmin] > vector[helper.j]) helper.lmin = helper.j;
-
-         while (vector.is_sorted() || (!input.keyboard.pressed(VK_RIGHT) && !helper.go)) {
-            if (!window.windowProcess(1.f)) return 0;
-         }
-      }
-
-      if (helper.lmin != helper.i)
-         swap(vector[helper.lmin], vector[helper.i]);
-   }
+   helper.sorter(vector);
+   vector.set_sorted(true);
+   
+   while (window.windowProcess(1.f));
 
    return 0;
 }
 
 void Win32API::Window::update(float deltaTime) {
 
-   if (input.keyboard.pressed(VK_RETURN)) helper.go ^= true;
+   if (input.keyboard.pressed(VK_RETURN)) helper.go = !helper.go;
 
    ctx.fillBackground(Color::BLACK);
    ctx.fillText(0, ctx.height() - 0x2, 27, Color::WHITE, Alignment::VALIGN_END, helper.name);

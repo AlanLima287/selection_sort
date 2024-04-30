@@ -1,8 +1,53 @@
+#pragma once
+
 #include "base.h"
 
 namespace Win32API {
 
    typedef unsigned long clr;
+
+   enum Color {
+      BLACK = 0x000000,
+      SILVER = 0xc0c0c0,
+      GRAY = 0x808080,
+      WHITE = 0xffffff,
+
+      BROWN = 0x803000,
+
+      YELLOW = 0xffff00,
+      MAGENTA = 0xff00ff,
+      CYAN = 0x00ffff,
+
+      RED = 0xff0000,
+      GREEN = 0x00ff00,
+      BLUE = 0x0000ff,
+
+      MAROON = 0x800000,
+      FOREST = 0x008000,
+      NAVY = 0x000080,
+
+      PURPLE = 0x800080,
+      OLIVE = 0x808000,
+      TEAL = 0x008080,
+
+      ROSE = 0xff0080,
+      ORANGE = 0xff8000,
+      LIME = 0x80ff00,
+      AQUA = 0x00ff80,
+      VIOLET = 0x8000ff,
+      SKY = 0x0080ff,
+
+      PINK = 0xffc0c0,
+      ICE = 0xc0c0ff,
+   };
+
+   clr rgb(float red, float green, float blue) {
+      return ((clr)(red * 255.f) << 16) | ((clr)(green * 255.f) << 8) | (clr)(blue * 255.f);
+   }
+
+   clr rgb(ulong red, ulong green, ulong blue) {
+      return (clr)(red << 16 | green << 8 | blue);
+   }
 
    clr hsl(float hue, float sat, float lum) {
 

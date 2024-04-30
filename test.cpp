@@ -10,15 +10,27 @@ int main(int argc, char** argv) {
 
    if (argc < 2) return 1;
 
-   ulong size = atoi(argv[1]);
-   if (0 >= size || size >= 1024) return 1;
+   ulong vector_size = atoi(argv[1]);
+   if (0 >= vector_size || vector_size > 4096) return 1;
 
-   for (int i = atoi(argv[2]); i > 0; i--) {
+   ulong test_size = atoi(argv[2]);
+   if (0 > test_size || test_size > 4096) return 1;
+
+   size_t test_duration = 0;
+
+   for (ulong i = test_size; i > 0; i--) {
+
       ulong seed = (ulong)time(0);
-      vector.populate(size, seed, ListingStyle::RANDOM);
-      heapsort(vector);
+      vector.populate(vector_size, seed, ListingStyle::RANDOM);
 
-      for (int j = 1; j < size; j++) {
+      long start = clock();
+
+      selection_sort(vector);
+
+      long end = clock();
+      test_duration += end - start;
+
+      for (ulong j = 1; j < vector_size; j++) {
          if (vector[j - 1] >= vector[j]) {
             std::cout << "Error on the seed " << seed << " at the " << i << " / " << j << " step\n";
             return 0;
@@ -26,7 +38,8 @@ int main(int argc, char** argv) {
       }
    }
 
-   std::cout << "No error was found";
- 
+   std::cout << "No error was found\n";
+   std::cout << "Average execution time: " << (double)test_duration / test_size << "ms";
+
    return 0;
 }
