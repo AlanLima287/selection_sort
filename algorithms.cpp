@@ -1,12 +1,16 @@
-#include "vector.h"
+typedef unsigned long ulong;
 
-void selection_sort(Vector& vector) {
+void swap(int& a, int& b) {
+   a ^= b; b ^= a; a ^= b;
+}
 
-   for (ulong i = 0; i < vector.get_length() - 1; i++) {
+void selection_sort(int* vector, ulong length) {
+
+   for (ulong i = 0; i < length - 1; i++) {
 
       ulong lmin = i;
 
-      for (ulong j = i + 1; j < vector.get_length(); j++) {
+      for (ulong j = i + 1; j < length; j++) {
          if (vector[lmin] > vector[j]) lmin = j;
       }
 
@@ -15,9 +19,9 @@ void selection_sort(Vector& vector) {
    }
 }
 
-void double_selection_sort(Vector& vector) {
+void double_selection_sort(int* vector, ulong length) {
 
-   for (ulong i = 0, j = vector.get_length() - 1; i < j; i++, j--) {
+   for (ulong i = 0, j = length - 1; i < j; i++, j--) {
 
       ulong lmin = i;
       ulong lmax = i;
@@ -33,13 +37,13 @@ void double_selection_sort(Vector& vector) {
    }
 }
 
-void heapsort(Vector& vector) {
+void heapsort(int* vector, ulong length) {
 
-   for (ulong end = vector.get_length(), start = end >> 1; end > 1;) {
+   for (ulong end = length, start = end >> 1; end > 1;) {
 
       if (start > 0)
          start--;
-      else { 
+      else {
          end--;
          swap(vector[end], vector[0]);
       }

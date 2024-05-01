@@ -3,7 +3,6 @@
 #include <time.h>
 
 #include "vector.h"
-#include "sorting_algorithms.cpp"
 
 static Vector vector;
 
