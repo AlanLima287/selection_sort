@@ -65,3 +65,33 @@ void heapsort(int* vector, ulong length) {
       }
    }
 }
+
+void cycle_sort(int* vector, ulong length) {
+
+   for (ulong i = 0; i < length - 1; i++) {
+
+      int item = vector[i];
+      int pos = i;
+
+      for (ulong j = i + 1; j < length; j++)
+         if (vector[j] < item) pos++;
+
+      if (pos == i) continue;
+
+      while (item == vector[pos]) pos++;
+
+      swap(item, vector[pos]);
+
+      while (pos != i) {
+
+         pos = i;
+
+         for (ulong j = i + 1; j < length; j++)
+            if (vector[j] < item) pos++;
+
+         while (item == vector[pos]) pos++;
+
+         swap(item, vector[pos]);
+      }
+   }
+}
