@@ -132,13 +132,13 @@ void update_heapsort(Vector& vector) {
          if (vector[root] < vector[child]) {
             if (root != child)
                swap(vector[root], vector[child]);
-            
+
             helper.lmax = root;
             helper.lmin = child;
-            
+
             do if (!window.windowProcess(1.f)) exit(0);
             while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
-            
+
             root = child;
          }
 
@@ -163,6 +163,65 @@ void show_heapsort(Vector& vector) {
 
       clr color = (!vector.is_sorted() && (b == helper.i || b == helper.j || b == helper.lmin || b == helper.lmax)) ?
          Color::WHITE : color_lerp(Color::FOREST, Color::PURPLE, (float)(vector[b] - 1) / vector.get_length());
+
+      ctx.fillRect((int)ceil(start), 0, (int)ceil(helper.bar_width), (int)(helper.aspect_height * vector[b]), color);
+      start += helper.bar_width;
+   }
+}
+
+void update_cycle_sort(Vector& vector) {
+
+   Win32API::Window& window = Win32API::Window::getInstance();
+   Win32API::Input& input = window.getInput();
+
+   for (ulong i = 0; i < vector.get_length() - 1; i++) {
+
+      int item = vector[i];
+      int pos = i;
+
+      for (ulong j = i + 1; j < vector.get_length(); j++)
+         if (vector[j] < item) pos++;
+
+      if (pos == i) continue;
+
+      while (item == vector[pos]) pos++;
+
+      swap(item, vector[pos]);
+
+      while (pos != i) {
+
+         pos = i;
+
+         for (ulong j = i + 1; j < vector.get_length(); j++)
+            if (vector[j] < item) pos++;
+
+         while (item == vector[pos]) pos++;
+
+         do if (!window.windowProcess(1.f)) exit(0);
+         while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
+
+         swap(item, vector[pos]);
+      }
+   }
+}
+
+void show_cycle_sort(Vector& vector) {
+
+   using namespace Win32API;
+   RenderState& ctx = Window::getInstance().getContext();
+
+   // if (!vector.is_sorted()) {
+   //    sprintf(helper.text, "Current Comparasion: %lu %lu %lu %lu", helper.i, helper.j, helper.lmin, helper.lmax);
+   //    ctx.fillText(0, ctx.height() - 0x6E, 25, Color::WHITE, Alignment::VALIGN_END, helper.text);
+   // }
+
+   float start = 0;
+   for (ulong b = 0; b < vector.get_length(); b++) {
+
+      //clr color = (!vector.is_sorted() && (b == helper.i || b == helper.j || b == helper.lmin || b == helper.lmax)) ?
+      //   Color::WHITE : color_lerp(Color::FOREST, Color::PURPLE, (float)(vector[b] - 1) / vector.get_length());
+
+      clr color = color_lerp(Color::FOREST, Color::PURPLE, (float)(vector[b] - 1) / vector.get_length());
 
       ctx.fillRect((int)ceil(start), 0, (int)ceil(helper.bar_width), (int)(helper.aspect_height * vector[b]), color);
       start += helper.bar_width;

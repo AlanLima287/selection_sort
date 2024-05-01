@@ -4,7 +4,6 @@
 #include <time.h>
 
 #include "./Win32API/Win32API.h"
-#include "selection_sorts.cpp"
 #include "update.cpp"
 #include "vector.h"
 
@@ -58,13 +57,19 @@ int main(int argc, char** argv) {
          helper.display = &show_heapsort;
          break;
 
+      case 'c':
+         strcpy(helper.name, "Cycle Sort");
+         helper.sorter = &update_cycle_sort;
+         helper.display = &show_cycle_sort;
+         break;
+
       default: return 1;
    }
    else return 1;
 
    Window& window = Window::getInstance();
    window.setInstanceName("Selection Sort");
-   window.getContext().setFont("assets/CascadiaMono65.ftmp");
+   window.getContext().setFont("assets/basic.ftmp");
    window.launchWindow(SW_SHOWMAXIMIZED, false, true);
 
    helper.sorter(vector);
