@@ -75,7 +75,8 @@ namespace FontMap {
          character_sheet = new uchar[sizeof_full_char_sheet];
 
          uchar* sheet_cursor = character_sheet;
-         for (ulong i = 0; i < sizeof_full_char_sheet; i++) *sheet_cursor++ = 0;
+         for (ulong i = 0; i < sizeof_full_char_sheet; i++) 
+            *sheet_cursor++ = 0;
 
          char byte_cursor = 7;
          uchar* file_cursor = file_data;
