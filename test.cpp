@@ -2,7 +2,8 @@
 #include <random>
 #include <time.h>
 
-#include "selection_sorts.cpp"
+#include "vector.h"
+#include "sorting_algorithms.cpp"
 
 static Vector vector;
 

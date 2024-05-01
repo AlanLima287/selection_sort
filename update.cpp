@@ -1,5 +1,5 @@
 #include "./Win32API/Win32API.h"
-#include "selection_sorts.cpp"
+#include "vector.h"
 
 struct Helper {
    ulong i, j, k, lmin, lmax;

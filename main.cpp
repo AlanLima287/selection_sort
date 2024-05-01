@@ -6,6 +6,7 @@
 #include "./Win32API/Win32API.h"
 #include "selection_sorts.cpp"
 #include "update.cpp"
+#include "vector.h"
 
 using Win32API::Window;
 
@@ -16,29 +17,26 @@ int main(int argc, char** argv) {
    if (argc < 3) return 1;
 
    ulong size = atoi(argv[1]);
-   if (0 >= size || size >= 1024) return 1;
+   if (0 >= size || size > 1024) return 1;
+
+   ulong list_style = 1;
 
    if (argv[3][0] == '-') switch (argv[3][1]) {
 
-      case 'r':
-         vector.populate(size, (ulong)time(0), ListingStyle::RANDOM);
-         break;
+      case 'r': list_style = ListingStyle::RANDOM; break;
+      case 'i': list_style = ListingStyle::INVERSED; break;
+      case 'o': list_style = ListingStyle::ORDERED; break;
 
       case 'm':
-         if (argv[3][2] == 'o') vector.populate(size, (ulong)time(0), ListingStyle::MOSTLY_ORDERED);
-         else vector.populate(size, (ulong)time(0), ListingStyle::MOSTLY_INVERSED);
-         break;
-
-      case 'i':
-         vector.populate(size, 0, ListingStyle::INVERSED);
-         break;
-
-      case 'o':
-         vector.populate(size, 0, ListingStyle::ORDERED);
+         if (argv[3][2] == 'o') list_style = ListingStyle::MOSTLY_ORDERED;
+         else list_style = ListingStyle::MOSTLY_INVERSED;
          break;
 
       default: return 1;
    }
+   else return 1;
+
+   vector.populate(size, (ulong)time(0), list_style);
 
    if (argv[2][0] == '-') switch (argv[2][1]) {
 
@@ -62,6 +60,7 @@ int main(int argc, char** argv) {
 
       default: return 1;
    }
+   else return 1;
 
    Window& window = Window::getInstance();
    window.setInstanceName("Selection Sort");
@@ -70,7 +69,7 @@ int main(int argc, char** argv) {
 
    helper.sorter(vector);
    vector.set_sorted(true);
-   
+
    while (window.windowProcess(1.f));
 
    return 0;
