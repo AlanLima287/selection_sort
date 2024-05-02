@@ -1,7 +1,7 @@
 #pragma once
 
 #include "base.h"
-#include "font_map.cpp"
+#include "font_map.h"
 #include "color.h"
 
 namespace Win32API {
@@ -27,7 +27,7 @@ namespace Win32API {
 
    private:
 
-      FontMap::Font font;
+      Font font;
       BitmapBuffer bitmap;
 
    public:

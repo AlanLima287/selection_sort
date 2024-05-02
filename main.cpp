@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
 
    Window& window = Window::getInstance();
    window.setInstanceName("Selection Sort");
-   window.getContext().setFont("assets/basic.ftmp");
+   window.getContext().setFont("assets/CascadiaCode65.ftmp");
    window.launchWindow(SW_SHOWMAXIMIZED, false, true);
 
    helper.sorter(vector);
