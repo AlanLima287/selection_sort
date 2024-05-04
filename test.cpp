@@ -4,6 +4,8 @@
 
 #include "vector.h"
 
+#include <fstream>
+
 static Vector vector;
 
 int main(int argc, char** argv) {

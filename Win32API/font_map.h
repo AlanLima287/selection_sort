@@ -34,7 +34,6 @@ const unsigned char basic_font_data[] = {
 
 class Font {
 
-
    typedef unsigned char uchar;
    typedef unsigned long ulong;
 
@@ -80,11 +79,11 @@ public:
 
    bool ftmpAssembler(const char* font_file_path) {
 
-      std::ifstream file(font_file_path, std::ios::in | std::ios::binary);
+      std::fstream file(font_file_path, std::ios::in | std::ios::binary);
       if (!file) {
-         
-         file.open("assets/default.ftmp", std::ios::in | std::ios::binary);
 
+         file.open("assets/default.ftmp", std::ios::in | std::ios::binary);
+         
          if (!file) {
             loadBasic();
             is_basic = true;
