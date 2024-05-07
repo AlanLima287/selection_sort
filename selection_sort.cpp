@@ -18,6 +18,32 @@ void selection_sort(int* vector, int length) {
 
 // Para Luiz Felipe | Análise de Complexidade
 
+void selection_sort_ex(int* vector, int length) {
+
+   int i = 0;
+   while (i < length - 1) {
+
+      int lmin = i;
+      int j = i + 1;
+
+      while (j < length) {
+         if (vector[lmin] > vector[j])
+            lmin = j;
+
+         j++;
+      }
+
+      //swap(vector[lmin], vector[i]);
+      {
+         int temp = vector[lmin];
+         vector[lmin] = vector[i];
+         vector[i] = vector[lmin];
+      }
+
+      i++;
+   }
+}
+
 #include <iostream>
 #include <random>
 #include <time.h>
