@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 
       long start = clock();
 
-      selection_sort(vector);
+      quicksort(vector, 0, vector.get_length() - 1);
 
       long end = clock();
       test_duration += end - start;

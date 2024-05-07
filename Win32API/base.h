@@ -57,7 +57,7 @@ float invsqrtf(float num) {
 
 /* Warning! If the values have the same address, it will end up setting both to 0 */
 inline void swap(int& a, int& b) {
-   a ^= b; b ^= a; a ^= b;
+   int temp = a; a = b; b = temp;
 }
 
 #endif

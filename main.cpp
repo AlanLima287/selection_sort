@@ -62,13 +62,31 @@ int main(int argc, char** argv) {
          helper.sorter = &update_cycle_sort;
          helper.display = &show_cycle_sort;
          break;
+         
+      case 'i':
+         strcpy(helper.name, "Insertion Sort");
+         helper.sorter = &update_insertion_sort;
+         helper.display = &show_cycle_sort;
+         break;
+
+      case 'b':
+         strcpy(helper.name, "Bubble Sort");
+         helper.sorter = &update_bubble_sort;
+         helper.display = &show_cycle_sort;
+         break;
+
+      // case 'q':
+      //    strcpy(helper.name, "Quicksort");
+      //    helper.sorter = &update_quicksort;
+      //    helper.display = &show_cycle_sort;
+      //    break;
 
       default: return 1;
    }
    else return 1;
 
    Window& window = Window::getInstance();
-   window.setInstanceName("Selection Sort");
+   window.setInstanceName("Sorting Algorithms");
    window.getContext().setFont("assets/CascadiaCode65.ftmp");
    window.launchWindow(SW_SHOWMAXIMIZED, false, true);
 
