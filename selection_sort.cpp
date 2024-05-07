@@ -110,18 +110,17 @@ int main(int argc, char** argv) {
       }
 
       // para visualização apenas
+      std::cin.ignore();
+
       for (int i = 0; i < length; i++)
          std::cout << vector[i] << ' ';
-      std::cout << '\n';
-      
-      std::cin.ignore();
-      std::cin.get();
 
       swap(vector[lmin], vector[i]);
    }
 
    // fim do selection sort
 
+   std::cout << '\n';
    for (int i = 0; i < length; i++)
       std::cout << vector[i] << ' ';
 
