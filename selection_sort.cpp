@@ -111,7 +111,6 @@ int main(int argc, char** argv) {
 
       // para visualização apenas
       std::cin.ignore();
-
       for (int i = 0; i < length; i++)
          std::cout << vector[i] << ' ';
 
