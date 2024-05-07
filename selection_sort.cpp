@@ -113,11 +113,15 @@ int main(int argc, char** argv) {
       for (int i = 0; i < length; i++)
          std::cout << vector[i] << ' ';
       std::cout << '\n';
+      std::cin.get();
 
       swap(vector[lmin], vector[i]);
    }
 
    // fim do selection sort
+
+   for (int i = 0; i < length; i++)
+      std::cout << vector[i] << ' ';
 
    delete[] vector;
    return 0;
