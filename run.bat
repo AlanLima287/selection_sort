@@ -7,6 +7,8 @@ echo    [arg_1]: Sorting algorithm
 echo       -s: selection sort
 echo       -d: double selection sort
 echo       -h: heapsort 
+echo       -c: cycle sort
+echo       -t: stable selection sort
 echo:
 echo    [arg_2]: List style
 echo       -r: random
@@ -20,5 +22,6 @@ echo              "main 340 -h -mi"
 echo:
 echo On the window: Press 'Enter' to pause/resume the sorting
 echo                Press 'Left Arrow' to step forward
+echo                Hold 'Control' to slow down the sorting 
 echo:
 cmd /k

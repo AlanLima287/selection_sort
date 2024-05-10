@@ -74,63 +74,39 @@ void populate(int* vector, ulong length, ulong seed, ulong style = ListingStyle:
 
 int main(int argc, char** argv) {
 
-   long v[10] = {};
+   const ulong max_test_size = 10000;
+   const ulong test_rigor = 10;
 
-   v[0] = clock();
-   v[1] = clock();
-   v[2] = clock();
-   v[3] = clock();
-   v[4] = clock();
+   const ulong step_size = 100;
+   const ulong seed = (ulong)time(0);
 
-   for (int i = 0; i < 5; i++) {
-      std::cout << v[i] << ' ';
+   int* vector = new int[max_test_size];
+
+   for (ulong i = step_size; i <= max_test_size; i += step_size) {
+
+      size_t test_duration = 0;
+
+      for (ulong j = 0; j < test_rigor; j++) {
+
+         populate(vector, i, seed, ListingStyle::RANDOM);
+
+         long start = clock();
+
+         selection_sort(vector, i);
+
+         test_duration += clock() - start;
+
+         // for (ulong k = 1; k < i; k++) {
+         //    if (vector[k - 1] >= vector[k]) {
+         //       std::cout << "Error on the seed " << seed << " at the " << i << " / " << k << " step\n";
+         //       return 0;
+         //    }
+         // }
+      }
+
+      std::cout << i << ';' << (double)test_duration / 10 << '\n';
    }
 
-   v[5] = clock();
-   v[6] = clock();
-   v[7] = clock();
-   v[8] = clock();
-   v[9] = clock();
-
-   for (int i = 5; i < 10; i++) {
-      std::cout << v[i] << ' ';
-   }
-
+   delete[] vector;
    return 0;
-
-   // const ulong max_test_size = 8000;
-   // const ulong test_rigor = 30;
-
-   // const ulong step_size = 50;
-   // const ulong seed = (ulong)time(0);
-
-   // int* vector = new int[max_test_size];
-
-   // for (ulong i = step_size; i <= max_test_size; i += step_size) {
-
-   //    size_t test_duration = 0;
-
-   //    for (ulong j = 0; j < test_rigor; j++) {
-
-   //       populate(vector, i, seed, ListingStyle::RANDOM);
-
-   //       long start = clock();
-
-   //       selection_sort(vector, i);
-
-   //       test_duration += clock() - start;
-
-   //       // for (ulong k = 1; k < i; k++) {
-   //       //    if (vector[k - 1] >= vector[k]) {
-   //       //       std::cout << "Error on the seed " << seed << " at the " << i << " / " << k << " step\n";
-   //       //       return 0;
-   //       //    }
-   //       // }
-   //    }
-
-   //    std::cout << i << ';' << (double)test_duration << '\n';
-   // }
-
-   // delete[] vector;
-   // return 0;
 }

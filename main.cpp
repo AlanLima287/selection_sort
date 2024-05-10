@@ -48,38 +48,26 @@ int main(int argc, char** argv) {
       case 'd':
          strcpy(helper.name, "Double Selection Sort");
          helper.sorter = &update_double_selection_sort;
-         helper.display = &show_double_selection_sort;
+         helper.display = &default_show;
          break;
 
       case 'h':
          strcpy(helper.name, "Heapsort");
          helper.sorter = &update_heapsort;
-         helper.display = &show_heapsort;
+         helper.display = &default_show;
          break;
 
       case 'c':
          strcpy(helper.name, "Cycle Sort");
          helper.sorter = &update_cycle_sort;
-         helper.display = &show_cycle_sort;
-         break;
-         
-      case 'i':
-         strcpy(helper.name, "Insertion Sort");
-         helper.sorter = &update_insertion_sort;
-         helper.display = &show_cycle_sort;
+         helper.display = &default_show;
          break;
 
-      case 'b':
-         strcpy(helper.name, "Bubble Sort");
-         helper.sorter = &update_bubble_sort;
-         helper.display = &show_cycle_sort;
+      case 't':
+         strcpy(helper.name, "Stable Selection Sort");
+         helper.sorter = &update_stable_selection_sort;
+         helper.display = &default_show;
          break;
-
-      // case 'q':
-      //    strcpy(helper.name, "Quicksort");
-      //    helper.sorter = &update_quicksort;
-      //    helper.display = &show_cycle_sort;
-      //    break;
 
       default: return 1;
    }
@@ -87,7 +75,7 @@ int main(int argc, char** argv) {
 
    Window& window = Window::getInstance();
    window.setInstanceName("Sorting Algorithms");
-   window.getContext().setFont("assets/CascadiaCode65.ftmp");
+   window.getContext().setFont("assets/Consola16.ftmp");
    window.launchWindow(SW_SHOWMAXIMIZED, false, true);
 
    helper.sorter(vector);
@@ -102,14 +90,10 @@ void Win32API::Window::update(float deltaTime) {
 
    if (input.keyboard.pressed(VK_RETURN)) helper.go = !helper.go;
 
-   ctx.fillBackground(Color::BLACK);
-   ctx.fillText(0, ctx.height() - 0x2, 27, Color::WHITE, Alignment::VALIGN_END, helper.name);
+   ctx.fillBackground(Color::WHITE);
+   ctx.fillText(0, ctx.height(), 50, Color::BLACK, Alignment::VALIGN_END, helper.name);
 
-   sprintf(helper.text, "Comparasions: %lu", helper.comparisons);
-   ctx.fillText(0, ctx.height() - 0x25, 25, Color::WHITE, Alignment::VALIGN_END, helper.text);
-
-   sprintf(helper.text, "Swaps: %lu", helper.swaps);
-   ctx.fillText(0, ctx.height() - 0x45, 25, Color::WHITE, Alignment::VALIGN_END, helper.text);
+   if (input.keyboard.isDown(VK_CONTROL)) Sleep(30);
 
    helper.display(vector);
 }

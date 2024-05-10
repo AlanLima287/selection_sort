@@ -8,7 +8,7 @@ namespace Win32API {
 
    enum Color {
       BLACK = 0x000000,
-      SILVER = 0xc0c0c0,
+      SILVER = 0xcccccc,
       GRAY = 0x808080,
       WHITE = 0xffffff,
 
@@ -76,8 +76,8 @@ namespace Win32API {
 
    clr color_lerp(clr color0, clr color1, float t) {
 
-      return ((clr)((float)(color0 & 0xff0000) * t + (float)(color1 & 0xff0000) * (1 - t)) & 0xff0000)
-         | ((clr)((float)(color0 & 0xff00) * t + (float)(color1 & 0xff00) * (1 - t)) & 0xff00)
-         | ((clr)((float)(color0 & 0xff) * t + (float)(color1 & 0xff) * (1 - t)) & 0xff);
+      return ((clr)((float)(color1 & 0xff0000) * t + (float)(color0 & 0xff0000) * (1 - t)) & 0xff0000)
+         | ((clr)((float)(color1 & 0xff00) * t + (float)(color0 & 0xff00) * (1 - t)) & 0xff00)
+         | ((clr)((float)(color1 & 0xff) * t + (float)(color0 & 0xff) * (1 - t)) & 0xff);
    }
 }
