@@ -3,11 +3,17 @@
 #include <iostream>
 #include <math.h>
 
+#undef NOMINMAX
+#define NOMINMAX
+
 #include <Windows.h>
 #include <Windowsx.h>
 
+#ifndef clamp
 #define clamp(minv, val, maxv) (((val) < (minv)) ? (minv) : (((val) > (maxv)) ? (maxv) : (val)))
+#endif
 
+typedef unsigned short ushort;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
 typedef unsigned int uint;
@@ -35,36 +41,38 @@ inline float mod_f(float num, float mod) {
    return result >= 0 ? result : result + mod;
 }
 
+/*
 float invsqrtf(float num) {
 
    long i;
-   float x2, y;
+   float x2;
    const float threehalfs = 1.5f;
 
    x2 = num * 0.5f;
-   y = num;
-   i = *(long*)&y;									   // evil floating point bit level hacking
-   i = 0x5f3759df - (i >> 1);						   // what the fuck?
-   y = *(float*)&i;
-   y = y * (threehalfs - (x2 * y * y));			// 1st iteration
-   // y  = y * ( threehalfs - ( x2 * y * y ) );	// 2nd iteration, this can be removed
+   i = *(long*)&num;                            // evil floating point bit level hacking
+   i = 0x5f3759df - (i >> 1);                   // what the fuck?
+   num = *(float*)&i;
+   num = num * (threehalfs - (x2 * num * num)); // 1st iteration
+   // y = y * ( threehalfs - ( x2 * y * y ) );  // 2nd iteration, this can be removed
 
-   return y;
+   return num;
 }
-
-#ifndef __XOR_SWAP__
-#define __XOR_SWAP__
+*/
 
 /* Warning! If the values have the same address, it will end up setting both to 0 */
-inline void swap(int& a, int& b) {
-   int temp = a; a = b; b = temp;
+template <typename type>
+inline void swap(type& a, type& b) {
+   a ^= b; b ^= a; a ^= b;
 }
 
-#endif
+template <typename type>
+inline void swap_s(type& a, type& b) {
+   type c = a; a = b; b = c;
+}
 
 namespace Win32API {
 
-   LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+   LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 
    typedef struct {
       int width, height;

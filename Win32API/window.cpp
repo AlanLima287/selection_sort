@@ -4,7 +4,7 @@
 
 namespace Win32API {
 
-   LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+   LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
       switch (uMsg) {
 
@@ -83,7 +83,7 @@ namespace Win32API {
       wndClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
       wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 
-      wndClass.lpfnWndProc = WindowProc;
+      wndClass.lpfnWndProc = WindowProcedure;
       wndClass.hInstance = m_hInstance;
 
       RegisterClassW(&wndClass);
@@ -103,7 +103,7 @@ namespace Win32API {
    }
 
    void Window::launchWindow(int showMode, bool running, bool hideConsole) {
-      
+
       ShowWindow(m_hWnd, showMode);
 
       if (hideConsole) FreeConsole();
@@ -128,13 +128,13 @@ namespace Win32API {
    }
 
    bool Window::windowProcess(float deltaTime) {
-
+      
       input.setChangedAttribute();
 
       bool running = true;
       MSG msg = {};
 
-      while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+      while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE)) {
 
          if (msg.message == WM_QUIT) running = false;
 

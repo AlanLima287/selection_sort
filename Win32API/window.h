@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-
 #include "base.h"
 #include "input.h"
 #include "renderer.h"
@@ -10,7 +8,7 @@ namespace Win32API {
 
    class Window {
 
-      friend LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+      friend LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 
    private:
 
@@ -48,7 +46,7 @@ namespace Win32API {
       inline Input& getInput() { return input; }
 
       void launchWindow(int = SW_NORMAL, bool = true, bool = true);
-      bool windowProcess(float);
+      bool windowProcess(float = 1.f);
 
       void update(float);
       void resize();

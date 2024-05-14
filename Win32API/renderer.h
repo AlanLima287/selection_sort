@@ -22,7 +22,7 @@ namespace Win32API {
 
    class RenderState {
 
-      friend LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+      friend LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
       friend class Window;
 
    private:

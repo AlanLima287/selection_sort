@@ -9,7 +9,7 @@ namespace Win32API {
 
    class Input {
 
-      friend LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+      friend LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 
       class ButtonState {
 
@@ -25,7 +25,7 @@ namespace Win32API {
 
          ButtonState(const ButtonState&) = delete;
          ButtonState operator=(const ButtonState&) = delete;
-         ~ButtonState() {};
+         ~ButtonState() = default;
 
          inline bool isDown() const { return is_down; }
          inline bool pressed() const { return is_down && changed; }
@@ -67,7 +67,7 @@ namespace Win32API {
    public:
 
       void processKeyboardInput(uchar vk_code, bool is_down) {
-         keyboard.keys[vk_code].changed = is_down ^ keyboard.keys[vk_code].is_down;
+         keyboard.keys[vk_code].changed = is_down != keyboard.keys[vk_code].is_down;
          keyboard.keys[vk_code].is_down = is_down;
       }
 
@@ -79,22 +79,20 @@ namespace Win32API {
          bool is_x1_button_down = (wParam & MK_XBUTTON1) != 0;
          bool is_x2_button_down = (wParam & MK_XBUTTON2) != 0;
 
-         mouse.left.changed = mouse.left.is_down ^ is_left_down;
-         mouse.right.changed = mouse.right.is_down ^ is_right_down;
-         mouse.middle.changed = mouse.middle.is_down ^ is_middle_down;
-         mouse.x2_button.changed = mouse.x2_button.is_down ^ is_x2_button_down;
-         mouse.x1_button.changed = mouse.x1_button.is_down ^ is_x1_button_down;
+         mouse.left.changed = mouse.left.is_down != is_left_down;
+         mouse.right.changed = mouse.right.is_down != is_right_down;
+         mouse.middle.changed = mouse.middle.is_down != is_middle_down;
+         mouse.x2_button.changed = mouse.x2_button.is_down != is_x2_button_down;
+         mouse.x1_button.changed = mouse.x1_button.is_down != is_x1_button_down;
 
          mouse.left.is_down = is_left_down;
          mouse.right.is_down = is_right_down;
          mouse.middle.is_down = is_middle_down;
          mouse.x2_button.is_down = is_x2_button_down;
          mouse.x1_button.is_down = is_x1_button_down;
-
       }
 
       void processMouseMovement(int xpos, int ypos) {
-
          mouse.deltaX = xpos - mouse.offsetX;
          mouse.deltaY = ypos - mouse.offsetY;
 
@@ -118,7 +116,7 @@ namespace Win32API {
          mouse.deltaY = 0;
          mouse.deltaWheel = 0;
 
-         for (short i = 0; i < 0xff; i++) {
+         for (ushort i = 0; i <= KeyboardInput::KEYBOARD_BUTTON_COUNT; i++) {
             keyboard.keys[i].changed = false;
          }
       }

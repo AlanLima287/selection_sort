@@ -1,18 +1,9 @@
 #pragma once
 
 #include <random>
+#include "Win32API/Win32API.h"
 
 typedef unsigned long ulong;
-
-#ifndef __XOR_SWAP__
-#define __XOR_SWAP__
-
-/* Warning! If the values have the same address, it will end up setting both to 0 */
-inline void swap(int& a, int& b) {
-   a ^= b; b ^= a; a ^= b;
-}
-
-#endif
 
 enum ListingStyle {
    RANDOM,
@@ -178,66 +169,6 @@ void bubble_sort(Vector& vector) {
       }
 
    } while (has_swapped);
-}
-
-void merge_sort(Vector& vector) {
-
-   bool has_swapped;
-
-   do {
-
-      has_swapped = false;
-
-      for (ulong i = 1; i < vector.get_length(); i++) {
-
-         if (vector[i - 1] > vector[i]) {
-            swap(vector[i - 1], vector[i]);
-            has_swapped = true;
-         }
-      }
-
-   } while (has_swapped);
-}
-
-int partition(Vector& vector, ulong left, ulong right);
-void quicksort(Vector& vector, ulong start, ulong end) {
-
-   if (start >= end)
-      return;
-
-   ulong pivot = partition(vector, end, start);
-
-   // ulong pivot = start;
-
-   // for (ulong j = start; j < end; j++) {
-
-   //    if (vector[j] <= vector[end]) {
-   //       swap(vector[pivot], vector[j]);
-   //       pivot++;
-   //    }
-   // }
-
-   // swap(vector[pivot], vector[end]);
-
-   quicksort(vector, start, pivot - 1);
-   quicksort(vector, pivot + 1, end);
-}
-
-int partition(Vector& vector, ulong left, ulong right) {
-
-   int pivot = vector[left];
-   ulong i = left;
-
-   for (int j = left + 1; j <= right; j++) {
-      if (vector[j] <= pivot) {
-         i += 1;
-         swap(vector[i], vector[j]);
-      }
-   }
-
-   swap(vector[left], vector[i]);
-
-   return i;
 }
 
 void double_selection_sort(Vector& vector) {
