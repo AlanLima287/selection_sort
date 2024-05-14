@@ -81,8 +81,8 @@ int main(int argc, char** argv) {
    helper.sorter(vector);
    vector.set_sorted(true);
 
-   while (window.windowProcess(1.f));
-
+   while (window.windowProcess());
+   
    return 0;
 }
 

@@ -2,7 +2,7 @@
 #include "vector.h"
 
 struct Helper {
-   ulong i, j, k, lmin, lmax;
+   ulong i, j, lmin;
 
    char name[255], text[255];
    float aspect_height, bar_width;
@@ -12,9 +12,9 @@ struct Helper {
    void (*display)(Vector&);
 
 } helper{
-   (ulong)~0, (ulong)~0, (ulong)~0, (ulong)~0,
-   (ulong)~0, "", "", .0f, .0f,
-   false, nullptr, nullptr
+   (ulong)~0, (ulong)~0, (ulong)~0,
+   "", "", .0f, .0f, false,
+   nullptr, nullptr
 };
 
 void update_selection_sort(Vector& vector) {
@@ -27,14 +27,14 @@ void update_selection_sort(Vector& vector) {
       helper.lmin = helper.i;
 
       for (helper.j = helper.i + 1; helper.j < vector.get_length(); helper.j++) {
-         do if (!window.windowProcess(1.f)) exit(0);
+         do if (!window.windowProcess()) exit(0);
          while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
 
          if (vector[helper.lmin] > vector[helper.j])
             helper.lmin = helper.j;
       }
 
-      swap(vector[helper.lmin], vector[helper.i]);
+      swap_s(vector[helper.lmin], vector[helper.i]);
    }
 }
 
@@ -84,9 +84,9 @@ void update_double_selection_sort(Vector& vector) {
          while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
       }
 
-      swap(vector[lmin], vector[i]);
-      if (lmax == i) swap(vector[lmin], vector[j]);
-      else swap(vector[lmax], vector[j]);
+      swap_s(vector[lmin], vector[i]);
+      if (lmax == i) swap_s(vector[lmin], vector[j]);
+      else swap_s(vector[lmax], vector[j]);
    }
 }
 
@@ -95,12 +95,12 @@ void update_heapsort(Vector& vector) {
    Win32API::Window& window = Win32API::Window::getInstance();
    Win32API::Input& input = window.getInput();
 
-   for (int i = vector.get_length(), j = i >> 1; i > 1;) {
+   for (ulong i = vector.get_length(), j = i >> 1; i > 1;) {
 
       if (j > 0) j--;
       else {
          i--;
-         swap(vector[i], vector[0]);
+         swap_s(vector[i], vector[0]);
       }
 
       ulong root = j;
@@ -115,7 +115,7 @@ void update_heapsort(Vector& vector) {
             do if (!window.windowProcess(1.f)) exit(0);
             while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
 
-            swap(vector[root], vector[child]);
+            swap_s(vector[root], vector[child]);
             root = child;
          }
 
@@ -129,11 +129,11 @@ void update_stable_selection_sort(Vector& vector) {
    Win32API::Window& window = Win32API::Window::getInstance();
    Win32API::Input& input = window.getInput();
 
-   for (int i = 0; i < vector.get_length() - 1; i++) {
+   for (ulong i = 0; i < vector.get_length() - 1; i++) {
 
-      int min = i;
+      ulong min = i;
 
-      for (int j = i + 1; j < vector.get_length(); j++) {
+      for (ulong j = i + 1; j < vector.get_length(); j++) {
 
          do if (!window.windowProcess(1.f)) exit(0);
          while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
@@ -142,7 +142,7 @@ void update_stable_selection_sort(Vector& vector) {
       }
 
       int key = vector[min];
-      for (int k = min; k > i; k--) {
+      for (ulong k = min; k > i; k--) {
          vector[k] = vector[k - 1];
       }
 
@@ -158,7 +158,7 @@ void update_cycle_sort(Vector& vector) {
    for (ulong i = 0; i < vector.get_length() - 1; i++) {
 
       int item = vector[i];
-      int pos = i;
+      ulong pos = i;
 
       for (ulong j = i + 1; j < vector.get_length(); j++)
          if (vector[j] < item) pos++;
@@ -167,7 +167,7 @@ void update_cycle_sort(Vector& vector) {
 
       while (item == vector[pos]) pos++;
 
-      swap(item, vector[pos]);
+      swap_s(item, vector[pos]);
 
       while (pos != i) {
 
@@ -181,7 +181,7 @@ void update_cycle_sort(Vector& vector) {
          do if (!window.windowProcess(1.f)) exit(0);
          while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
 
-         swap(item, vector[pos]);
+         swap_s(item, vector[pos]);
       }
    }
 }
