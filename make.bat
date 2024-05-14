@@ -1,1 +1,0 @@
-g++ main.cpp -mwindows -O3 -o main
