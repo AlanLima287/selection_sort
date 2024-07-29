@@ -70,9 +70,9 @@ clr hsl(float hue, float sat, float lum) {
    return 0;
 }
 
-clr color_lerp(clr color0, clr color1, float t) {
+clr color_lerp(clr color0, clr color1, float step) {
 
-   return ((clr)((float)(color1 & 0xff0000) * t + (float)(color0 & 0xff0000) * (1 - t)) & 0xff0000)
-      | ((clr)((float)(color1 & 0xff00) * t + (float)(color0 & 0xff00) * (1 - t)) & 0xff00)
-      | ((clr)((float)(color1 & 0xff) * t + (float)(color0 & 0xff) * (1 - t)) & 0xff);
+   return ((clr)((float)(color1 & 0xff0000) * step + (float)(color0 & 0xff0000) * (1 - step)) & 0xff0000)
+      | ((clr)((float)(color1 & 0xff00) * step + (float)(color0 & 0xff00) * (1 - step)) & 0xff00)
+      | ((clr)((float)(color1 & 0xff) * step + (float)(color0 & 0xff) * (1 - step)) & 0xff);
 }

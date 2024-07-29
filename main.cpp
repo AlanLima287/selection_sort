@@ -69,6 +69,13 @@ int main(int argc, char** argv) {
          helper.display = &default_show;
          break;
 
+      case 'q':
+         strcpy(helper.name, "Quicksort");
+         helper.sorter = &update_quicksort;
+         helper.display = &default_show;
+         break;
+
+
       default: return 1;
    }
    else return 1;
@@ -82,7 +89,7 @@ int main(int argc, char** argv) {
    vector.set_sorted(true);
 
    while (window.windowProcess());
-   
+
    return 0;
 }
 
@@ -91,7 +98,8 @@ void Win32API::Window::update(float deltaTime) {
    if (input.keyboard.pressed(VK_RETURN)) helper.go = !helper.go;
 
    ctx.fillBackground(Color::WHITE);
-   ctx.fillText(0, ctx.height(), 50, Color::BLACK, Alignment::VALIGN_END, helper.name);
+   ctx.fillText(0, ctx.height(), 50, vector.is_sorted() ? Color::BLACK : Color::GRAY,
+      Alignment::VALIGN_END, helper.name);
 
    if (input.keyboard.isDown(VK_CONTROL)) Sleep(30);
 

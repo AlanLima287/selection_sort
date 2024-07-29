@@ -9,6 +9,7 @@ echo       -d: double selection sort
 echo       -h: heapsort 
 echo       -c: cycle sort
 echo       -t: stable selection sort
+echo       -q: quicksort
 echo:
 echo    [arg_2]: List style
 echo       -r: random

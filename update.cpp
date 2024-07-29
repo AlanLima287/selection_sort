@@ -178,12 +178,57 @@ void update_cycle_sort(Vector& vector) {
 
          while (item == vector[pos]) pos++;
 
-         do if (!window.windowProcess(1.f)) exit(0);
+         do if (!window.windowProcess()) exit(0);
          while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
 
          swap_s(item, vector[pos]);
       }
    }
+}
+
+void update_quicksort_ex(Vector& vector, ulong left, ulong right) {
+
+   Win32API::Window& window = Win32API::Window::getInstance();
+   Win32API::Input& input = window.getInput();
+
+   if (left >= right) return;
+
+   int p;
+   {
+      int pivot = vector[(left + right) >> 1];
+
+      ulong i = left - 1;
+      ulong j = right + 1;
+
+      while (true) {
+
+         // Move the left index to the right at least once and while the element at
+         // the left index is less than the pivot
+         do i++; while (vector[i] < pivot);
+
+         // Move the right index to the left at least once and while the element at
+         // the right index is greater than the pivot
+         do j--; while (vector[j] > pivot);
+
+         do if (!window.windowProcess()) exit(0);
+         while (!input.keyboard.pressed(VK_RIGHT) && !helper.go);
+
+         // If the indices crossed, return
+         if (i >= j) {
+            p = j;
+            break;
+         }
+
+         swap_s(vector[i], vector[j]);
+      }
+   }
+
+   update_quicksort_ex(vector, left, p);
+   update_quicksort_ex(vector, p + 1, right);
+}
+
+void update_quicksort(Vector& vector) {
+   update_quicksort_ex(vector, 0, vector.get_length() - 1);
 }
 
 void default_show(Vector& vector) {
